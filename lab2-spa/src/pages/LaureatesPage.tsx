@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import Table from "../components/Table";
+import Table, { type Column } from "../components/Table";
 import Pagination from "../components/Pagination";
 import LaureatesService from "../services/LaureatesService";
 import { CATEGORY_OPTIONS } from "../utils/format";
+import type { LaureateRow } from "../types";
 
 const PAGE_SIZE = 20;
 const laureatesService = new LaureatesService();
 
-const laureateColumns = [
+const laureateColumns: Column<LaureateRow>[] = [
   { key: "name", label: "Имя / название" },
   { key: "date", label: "Дата рождения / основания" },
   { key: "count", label: "Число премий" },
@@ -18,10 +19,10 @@ export default function LaureatesPage() {
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
 
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<LaureateRow[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Ждём, пока пользователь перестанет печатать, чтобы не слать
   // запрос на каждое нажатие клавиши.

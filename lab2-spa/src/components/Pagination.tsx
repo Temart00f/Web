@@ -1,4 +1,14 @@
-export default function Pagination({ page, totalPages, onChange }) {
+type PaginationProps = {
+  page: number;
+  totalPages: number;
+  onChange: (page: number) => void;
+};
+
+export default function Pagination({
+  page,
+  totalPages,
+  onChange,
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   return (

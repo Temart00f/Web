@@ -1,4 +1,21 @@
-export default function Table({ columns, data, badgeColumn }) {
+import type { ReactNode } from "react";
+
+export type Column<T> = {
+  key: keyof T & string;
+  label: string;
+};
+
+type TableProps<T> = {
+  columns: Column<T>[];
+  data: T[];
+  badgeColumn?: keyof T & string;
+};
+
+export default function Table<T extends Record<string, ReactNode>>({
+  columns,
+  data,
+  badgeColumn,
+}: TableProps<T>) {
   return (
     <div className="table-wrap">
       <table>

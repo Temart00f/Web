@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import Table from "../components/Table";
+import Table, { type Column } from "../components/Table";
 import Pagination from "../components/Pagination";
 import PrizesService from "../services/PrizesService";
 import { CATEGORY_OPTIONS } from "../utils/format";
+import type { PrizeRow } from "../types";
 
 const PAGE_SIZE = 20;
 const prizesService = new PrizesService();
 
-const prizeColumns = [
+const prizeColumns: Column<PrizeRow>[] = [
   { key: "category", label: "Категория" },
   { key: "date", label: "Дата вручения" },
   { key: "grant", label: "Грант" },
@@ -19,10 +20,10 @@ export default function PrizesPage() {
   const [year, setYear] = useState("");
   const [page, setPage] = useState(1);
 
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<PrizeRow[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

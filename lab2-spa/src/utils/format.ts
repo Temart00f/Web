@@ -1,11 +1,11 @@
-const MONTHS = [
+const MONTHS: string[] = [
   "января", "февраля", "марта", "апреля", "мая", "июня",
   "июля", "августа", "сентября", "октября", "ноября", "декабря",
 ];
 
 // API отдаёт даты вида "1943-11-07", а для организаций и старых записей
 // день/месяц бывают неизвестны и приходят как "00" (например "1863-00-00").
-export function formatDate(isoDate) {
+export function formatDate(isoDate: string | null | undefined): string {
   if (!isoDate) return "—";
   const [year, month, day] = isoDate.split("-");
   if (!month || month === "00") return year;
@@ -14,7 +14,12 @@ export function formatDate(isoDate) {
 }
 
 // Коды используются в параметре nobelPrizeCategory при запросе к API.
-export const CATEGORY_OPTIONS = [
+export type CategoryOption = {
+  code: string;
+  label: string;
+};
+
+export const CATEGORY_OPTIONS: CategoryOption[] = [
   { code: "che", label: "Химия" },
   { code: "phy", label: "Физика" },
   { code: "med", label: "Физиология и медицина" },
@@ -25,7 +30,7 @@ export const CATEGORY_OPTIONS = [
 
 // Сам API возвращает название категории на английском (category.en) —
 // переводим его для отображения в таблице.
-const CATEGORY_EN_TO_RU = {
+const CATEGORY_EN_TO_RU: Record<string, string> = {
   Chemistry: "Химия",
   Physics: "Физика",
   "Physiology or Medicine": "Физиология и медицина",
@@ -34,6 +39,7 @@ const CATEGORY_EN_TO_RU = {
   "Economic Sciences": "Экономические науки",
 };
 
-export function categoryLabel(englishName) {
+export function categoryLabel(englishName: string | undefined): string {
+  if (!englishName) return "—";
   return CATEGORY_EN_TO_RU[englishName] ?? englishName;
 }

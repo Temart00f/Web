@@ -2,7 +2,7 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import PrizesPage from "./pages/PrizesPage";
 import LaureatesPage from "./pages/LaureatesPage";
 
-function navLinkClass({ isActive }) {
+function navLinkClass({ isActive }: { isActive: boolean }): string {
   return isActive ? "active" : "";
 }
 
